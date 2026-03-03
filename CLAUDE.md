@@ -7,10 +7,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is a starter template for building web applications with Nuxt 4.
 
 **Key Technologies:**
+
 - Nuxt 4 (Vue.js framework)
 - Nuxt UI v4 (component library with dark mode)
 - TypeScript throughout
 - pnpm as package manager
+- oxlint + oxfmt for linting and formatting
+- Vitest + @nuxt/test-utils for testing
 
 ## Critical Architecture Details
 
@@ -37,6 +40,18 @@ pnpm dev
 # Lint code
 pnpm lint
 
+# Lint and auto-fix
+pnpm lint:fix
+
+# Format code
+pnpm format
+
+# Check formatting
+pnpm format:check
+
+# Run tests
+pnpm test
+
 # Build for production
 pnpm build
 
@@ -49,8 +64,8 @@ pnpm preview
 
 ## Configuration Files
 
-- `nuxt.config.ts` - Modules: `@nuxt/eslint`, `@nuxt/ui`, `nuxt-mcp-dev`
-- `eslint.config.mjs` - Extends from `.nuxt/eslint.config.mjs`
+- `nuxt.config.ts` - Modules: `@nuxt/ui`
+- `vitest.config.ts` - Vitest config using `@nuxt/test-utils` nuxt environment
 - `app/app.config.ts` - Nuxt UI theme customization (currently empty)
 
 ## Common Patterns
@@ -61,17 +76,32 @@ pnpm preview
 2. Add navigation link to `app/layouts/default.vue`
 3. Use Nuxt UI components (`UCard`, `UButton`, `UInput`, etc.)
 
+### Adding a Test
+
+Create test files under `tests/` mirroring the app structure. Use `mountSuspended` for page/component tests:
+
+```ts
+import { mountSuspended } from "@nuxt/test-utils/runtime";
+import MyPage from "~/pages/my-page.vue";
+
+it("mounts", async () => {
+  const wrapper = await mountSuspended(MyPage);
+  expect(wrapper.html()).toBeTruthy();
+});
+```
+
 ### Clearing Build Cache
 
 If you encounter hydration mismatches or stale build issues:
+
 ```bash
 rm -rf .nuxt .output
 ```
+
 The dev server will auto-regenerate on next start.
 
 ## Notes
 
-- No testing framework is included by design (add as needed for your use case)
-- The app uses `nuxt-mcp-dev` module for MCP server integration
 - TypeScript is configured with Nuxt's auto-generated types in `.nuxt/`
 - Dark mode is enabled by default via Nuxt UI's color mode system
+- Pre-commit hooks run oxlint and oxfmt on staged files via simple-git-hooks + lint-staged

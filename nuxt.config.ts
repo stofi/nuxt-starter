@@ -1,12 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint', '@nuxt/ui', 'nuxt-mcp-dev'],
+  modules: ["@nuxt/ui"],
   devtools: { enabled: true },
-  compatibilityDate: '2025-07-15',
-  css: ['~/assets/css/main.css'],
-  eslint: {
-    config: {
-      stylistic: true,
-    },
-  },
-})
+  compatibilityDate: "2025-07-15",
+  css: ["~/assets/css/main.css"],
+});
