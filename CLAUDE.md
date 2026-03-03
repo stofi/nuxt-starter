@@ -7,6 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is a starter template for building web applications with Nuxt 4.
 
 **Key Technologies:**
+
 - Nuxt 4 (Vue.js framework)
 - Nuxt UI v4 (component library with dark mode)
 - TypeScript throughout
@@ -80,21 +81,23 @@ pnpm preview
 Create test files under `tests/` mirroring the app structure. Use `mountSuspended` for page/component tests:
 
 ```ts
-import { mountSuspended } from '@nuxt/test-utils/runtime'
-import MyPage from '~/pages/my-page.vue'
+import { mountSuspended } from "@nuxt/test-utils/runtime";
+import MyPage from "~/pages/my-page.vue";
 
-it('mounts', async () => {
-  const wrapper = await mountSuspended(MyPage)
-  expect(wrapper.html()).toBeTruthy()
-})
+it("mounts", async () => {
+  const wrapper = await mountSuspended(MyPage);
+  expect(wrapper.html()).toBeTruthy();
+});
 ```
 
 ### Clearing Build Cache
 
 If you encounter hydration mismatches or stale build issues:
+
 ```bash
 rm -rf .nuxt .output
 ```
+
 The dev server will auto-regenerate on next start.
 
 ## Notes
